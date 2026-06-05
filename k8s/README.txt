@@ -4,24 +4,24 @@ Despliegue tienda-perritos en EKS (namespace 'tienda')
    aws eks update-kubeconfig --region us-east-1 --name <NOMBRE_TU_CLUSTER>
 
 2) Aplicar namespace:
-   kubectl apply -f namespace.yaml
+   kubectl apply -f namespace.yml
 
 3) Aplicar recursos de base de datos:
-   kubectl apply -f mysql-secret.yaml
-   kubectl apply -f mysql-deployment.yaml
-   kubectl apply -f mysql-service.yaml
+   kubectl apply -f mysql-secret.yml
+   kubectl apply -f mysql-deployment.yml
+   kubectl apply -f mysql-service.yml
 
 4) Aplicar backend:
-   kubectl apply -f backend-deployment.yaml
-   kubectl apply -f backend-service.yaml
+   kubectl apply -f backend-deployment.yml
+   kubectl apply -f backend-service.yml
 
 5) Aplicar frontend:
-   kubectl apply -f frontend-deployment.yaml
-   kubectl apply -f frontend-service.yaml
+   kubectl apply -f frontend-deployment.yml
+   kubectl apply -f frontend-service.yml
 
 6) Verificar:
    kubectl get pods -n tienda
-   kubectl get svc tienda-frontend -n tienda
+   kubectl get svc tienda-frontend-service -n tienda
 
 Copias el EXTERNAL-IP (DNS del ELB) â†’ lo abres en el navegadorâ†’ deberÃ­as ver la pÃ¡gina de Tienda de Perritos í ½í°¶
 
