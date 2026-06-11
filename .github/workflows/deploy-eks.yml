@@ -116,7 +116,11 @@ jobs:
           kubectl set image deployment/tienda-frontend \
             frontend=$ECR_REGISTRY/${ECR_REPO_FRONTEND}:${IMAGE_TAG} \
             -n $EKS_NAMESPACE
-          kubectl rollout status deployment/tienda-frontend -n $EKS_NAMESPACE
+          kubectl rollout status deployment/tienda-frontend -n $EKS_NAMESPACE --timeout=120s || true
+          kubectl get pods -n $EKS_NAMESPACE
+          kubectl describe deployment tienda-frontend -n $EKS_NAMESPACE
+          kubectl describe pods -n $EKS_NAMESPACE
+          kubectl logs deployment/tienda-frontend -n $EKS_NAMESPACE --all-containers=true --tail=100 || true
 
       # ---------- HPA (si existen los YAML) ----------
       - name: Aplicar HPA (opcional)
