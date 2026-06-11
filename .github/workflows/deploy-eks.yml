@@ -83,10 +83,10 @@ jobs:
         env:
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
-          kubectl apply -f k8s/namespace.yaml
-          kubectl apply -f k8s/mysql-secret.yaml -n $EKS_NAMESPACE
-          kubectl apply -f k8s/mysql-deployment.yaml -n $EKS_NAMESPACE
-          kubectl apply -f k8s/mysql-service.yaml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/namespace.yml
+          kubectl apply -f k8s/mysql-secret.yml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/mysql-deployment.yml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/mysql-service.yml -n $EKS_NAMESPACE
 
       # ---------- Actualizar BACKEND en EKS ----------
       - name: Actualizar BACKEND en EKS
@@ -94,8 +94,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
-          kubectl apply -f k8s/backend-deployment.yaml -n $EKS_NAMESPACE
-          kubectl apply -f k8s/backend-service.yaml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/backend-deployment.yml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/backend-service.yml -n $EKS_NAMESPACE
           kubectl set image deployment/tienda-backend \
             backend=$ECR_REGISTRY/${ECR_REPO_BACKEND}:${IMAGE_TAG} \
             -n $EKS_NAMESPACE
@@ -107,8 +107,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
-          kubectl apply -f k8s/frontend-deployment.yaml -n $EKS_NAMESPACE
-          kubectl apply -f k8s/frontend-service.yaml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/frontend-deployment.yml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/frontend-service.yml -n $EKS_NAMESPACE
           kubectl set image deployment/tienda-frontend \
             frontend=$ECR_REGISTRY/${ECR_REPO_FRONTEND}:${IMAGE_TAG} \
             -n $EKS_NAMESPACE
@@ -119,8 +119,8 @@ jobs:
         env:
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
-          if [ -f k8s/backend-hpa.yaml ]; then kubectl apply -f k8s/backend-hpa.yaml -n $EKS_NAMESPACE; fi
-          if [ -f k8s/frontend-hpa.yaml ]; then kubectl apply -f k8s/frontend-hpa.yaml -n $EKS_NAMESPACE; fi
+          if [ -f k8s/backend-hpa.yml ]; then kubectl apply -f k8s/backend-hpa.yml -n $EKS_NAMESPACE; fi
+          if [ -f k8s/frontend-hpa.yml ]; then kubectl apply -f k8s/frontend-hpa.yml -n $EKS_NAMESPACE; fi
 
       # ---------- Ver estado final ----------
       - name: Ver pods y servicios
